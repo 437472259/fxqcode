@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.ProductContractDetailMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.ProductContractDetail">
+    <!--@mbg.generated-->
+    <!--@Table product_contract_detail-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="TX_DT" jdbcType="DATE" property="txDt" />
+    <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_trade_nums" jdbcType="BIGINT" property="productTradeNums" />
+    <result column="product_position_nums" jdbcType="BIGINT" property="productPositionNums" />
+    <result column="trade_nums" jdbcType="BIGINT" property="tradeNums" />
+    <result column="position_nums" jdbcType="BIGINT" property="positionNums" />
+    <result column="agmtcount_cnt" jdbcType="DECIMAL" property="agmtcountCnt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, TX_DT, contract_name, product_name, product_trade_nums, product_position_nums,
+    trade_nums, position_nums, agmtcount_cnt
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select TX_DT, contract_name,product_trade_nums, product_position_nums,
+           trade_nums, position_nums, agmtcount_cnt from product_contract_detail where position_nums !=0 and trade_nums !=0
+    </select>
+
+  <select id="selectByDate" resultMap="BaseResultMap">
+    select contract_name,agmtcount_cnt from product_contract_detail where TX_DT = #{date}
+  </select>
+
+  <select id="selectAll2" resultMap="BaseResultMap">
+    select TX_DT,contract_name,agmtcount_cnt from product_contract_detail
+  </select>
+</mapper>

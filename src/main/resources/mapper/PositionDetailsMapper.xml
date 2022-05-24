@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.PositionDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.PositionDetails">
+    <!--@mbg.generated-->
+    <!--@Table position_details-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tx_dt" jdbcType="DATE" property="txDt" />
+    <result column="exchange_id" jdbcType="VARCHAR" property="exchangeId" />
+    <result column="agmt_cd" jdbcType="VARCHAR" property="agmtCd" />
+    <result column="investor_id" jdbcType="VARCHAR" property="investorId" />
+    <result column="investor_acct" jdbcType="VARCHAR" property="investorAcct" />
+    <result column="hedge_flg" jdbcType="VARCHAR" property="hedgeFlg" />
+    <result column="bs_flg" jdbcType="VARCHAR" property="bsFlg" />
+    <result column="open_dt" jdbcType="DATE" property="openDt" />
+    <result column="open_bargin_no" jdbcType="VARCHAR" property="openBarginNo" />
+    <result column="settlement_no" jdbcType="VARCHAR" property="settlementNo" />
+    <result column="bargain_type" jdbcType="VARCHAR" property="bargainType" />
+    <result column="count" jdbcType="DOUBLE" property="count" />
+    <result column="open_price" jdbcType="DOUBLE" property="openPrice" />
+    <result column="hpl_byday" jdbcType="DOUBLE" property="hplByday" />
+    <result column="hpl_atatime" jdbcType="DOUBLE" property="hplAtatime" />
+    <result column="cust_no" jdbcType="VARCHAR" property="custNo" />
+    <result column="settlement_price" jdbcType="DOUBLE" property="settlementPrice" />
+    <result column="pre_settlement_price" jdbcType="DOUBLE" property="preSettlementPrice" />
+    <result column="fee_amt" jdbcType="DOUBLE" property="feeAmt" />
+    <result column="exchange_fee_amt" jdbcType="DOUBLE" property="exchangeFeeAmt" />
+    <result column="investor_margin_amt" jdbcType="DOUBLE" property="investorMarginAmt" />
+    <result column="exchange_margin_amt" jdbcType="DOUBLE" property="exchangeMarginAmt" />
+    <result column="AGMTCOUNT_CNT" jdbcType="VARCHAR" property="agmtcountCnt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, tx_dt, exchange_id, agmt_cd, investor_id, investor_acct, hedge_flg, bs_flg, open_dt,
+    open_bargin_no, settlement_no, bargain_type, `count`, open_price, hpl_byday, hpl_atatime,
+    cust_no, settlement_price, pre_settlement_price, fee_amt, exchange_fee_amt, investor_margin_amt,
+    exchange_margin_amt, AGMTCOUNT_CNT
+  </sql>
+
+  <select id="selectByAcc" resultMap="BaseResultMap">
+    select tx_dt,open_bargin_no from position_details where investor_acct = #{accNo}
+    </select>
+</mapper>

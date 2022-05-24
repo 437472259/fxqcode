@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.OrderRecordMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.OrderRecord">
+    <!--@mbg.generated-->
+    <!--@Table order_record-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tx_dt" jdbcType="DATE" property="txDt" />
+    <result column="exchange_id" jdbcType="VARCHAR" property="exchangeId" />
+    <result column="exchange_trader_cd" jdbcType="VARCHAR" property="exchangeTraderCd" />
+    <result column="local_order_id" jdbcType="VARCHAR" property="localOrderId" />
+    <result column="settlement_no" jdbcType="VARCHAR" property="settlementNo" />
+    <result column="session_no" jdbcType="VARCHAR" property="sessionNo" />
+    <result column="front_id" jdbcType="VARCHAR" property="frontId" />
+    <result column="investor_id" jdbcType="VARCHAR" property="investorId" />
+    <result column="investor_acct" jdbcType="VARCHAR" property="investorAcct" />
+    <result column="agmt_cd" jdbcType="VARCHAR" property="agmtCd" />
+    <result column="order_ref" jdbcType="VARCHAR" property="orderRef" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="order_price_con" jdbcType="VARCHAR" property="orderPriceCon" />
+    <result column="bs_flg" jdbcType="CHAR" property="bsFlg" />
+    <result column="openclose_flg" jdbcType="VARCHAR" property="opencloseFlg" />
+    <result column="hedge_flg" jdbcType="VARCHAR" property="hedgeFlg" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="count" jdbcType="DECIMAL" property="count" />
+    <result column="force_close_reason" jdbcType="VARCHAR" property="forceCloseReason" />
+    <result column="member_id" jdbcType="VARCHAR" property="memberId" />
+    <result column="cust_no" jdbcType="VARCHAR" property="custNo" />
+    <result column="exchange_agmt_cd" jdbcType="VARCHAR" property="exchangeAgmtCd" />
+    <result column="order_submit_sts" jdbcType="VARCHAR" property="orderSubmitSts" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="order_sts" jdbcType="VARCHAR" property="orderSts" />
+    <result column="order_typ" jdbcType="VARCHAR" property="orderTyp" />
+    <result column="today_bargain_cnt" jdbcType="DECIMAL" property="todayBargainCnt" />
+    <result column="remain_cnt" jdbcType="DECIMAL" property="remainCnt" />
+    <result column="submit_time" jdbcType="VARCHAR" property="submitTime" />
+    <result column="order_dt" jdbcType="VARCHAR" property="orderDt" />
+    <result column="activation_time" jdbcType="VARCHAR" property="activationTime" />
+    <result column="suspend_time" jdbcType="VARCHAR" property="suspendTime" />
+    <result column="last_modify_time" jdbcType="VARCHAR" property="lastModifyTime" />
+    <result column="repeal_dt" jdbcType="VARCHAR" property="repealDt" />
+    <result column="lasttrader_id" jdbcType="VARCHAR" property="lasttraderId" />
+    <result column="seq_no" jdbcType="DECIMAL" property="seqNo" />
+    <result column="userforceclose_flg" jdbcType="CHAR" property="userforcecloseFlg" />
+    <result column="operator_id" jdbcType="VARCHAR" property="operatorId" />
+    <result column="brokercorp_order_id" jdbcType="VARCHAR" property="brokercorpOrderId" />
+    <result column="relativeorder_id" jdbcType="VARCHAR" property="relativeorderId" />
+    <result column="userproduct" jdbcType="VARCHAR" property="userproduct" />
+    <result column="time_condition" jdbcType="VARCHAR" property="timeCondition" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="mac" jdbcType="VARCHAR" property="mac" />
+    <result column="status_msg" jdbcType="VARCHAR" property="statusMsg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, tx_dt, exchange_id, exchange_trader_cd, local_order_id, settlement_no, session_no,
+    front_id, investor_id, investor_acct, agmt_cd, order_ref, user_id, order_price_con,
+    bs_flg, openclose_flg, hedge_flg, price, `count`, force_close_reason, member_id,
+    cust_no, exchange_agmt_cd, order_submit_sts, order_id, order_sts, order_typ, today_bargain_cnt,
+    remain_cnt, submit_time, order_dt, activation_time, suspend_time, last_modify_time,
+    repeal_dt, lasttrader_id, seq_no, userforceclose_flg, operator_id, brokercorp_order_id,
+    relativeorder_id, userproduct, time_condition, ip, mac, status_msg
+  </sql>
+
+  <select id="selectByAcc" resultMap="BaseResultMap">
+    select tx_dt,order_id,order_price_con,time_condition,agmt_cd from order_record where investor_acct = #{selfAccNo}
+    </select>
+</mapper>

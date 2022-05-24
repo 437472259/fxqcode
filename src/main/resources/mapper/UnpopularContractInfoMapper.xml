@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.UnpopularContractInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.UnpopularContractInfo">
+    <!--@mbg.generated-->
+    <!--@Table unpopular_contract_info-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="TX_DT" jdbcType="DATE" property="txDt" />
+    <result column="INVESTOR_ID" jdbcType="VARCHAR" property="investorId" />
+    <result column="invalid_date" jdbcType="DATE" property="invalidDate" />
+    <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_trade_nums" jdbcType="BIGINT" property="productTradeNums" />
+    <result column="product_position_nums" jdbcType="BIGINT" property="productPositionNums" />
+    <result column="trade_nums" jdbcType="BIGINT" property="tradeNums" />
+    <result column="position_nums" jdbcType="BIGINT" property="positionNums" />
+    <result column="open_amount" jdbcType="DECIMAL" property="openAmount" />
+    <result column="close_amount" jdbcType="DECIMAL" property="closeAmount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, TX_DT, INVESTOR_ID, invalid_date, contract_name, product_name, product_trade_nums,
+    product_position_nums, trade_nums, position_nums, open_amount, close_amount
+  </sql>
+
+  <select id="selectByAccNo" resultMap="BaseResultMap">
+    select * from unpopular_contract_info where INVESTOR_ID = #{selfAccNo};
+    </select>
+</mapper>

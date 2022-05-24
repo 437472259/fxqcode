@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.Log">
+    <!--@mbg.generated-->
+    <!--@Table log-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="TX_DT" jdbcType="DATE" property="txDt" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="LOGIN_SEQ" jdbcType="VARCHAR" property="loginSeq" />
+    <result column="INVESTOR_ID" jdbcType="VARCHAR" property="investorId" />
+    <result column="LOGIN_TIME" jdbcType="TIME" property="loginTime" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="MAC" jdbcType="VARCHAR" property="mac" />
+    <result column="DRIDENTITYID" jdbcType="VARCHAR" property="dridentityid" />
+    <result column="USERPRODUCT" jdbcType="VARCHAR" property="userproduct" />
+    <result column="SRC_IP" jdbcType="VARCHAR" property="srcIp" />
+    <result column="SRC_MAC" jdbcType="VARCHAR" property="srcMac" />
+    <result column="FRONT_ID" jdbcType="VARCHAR" property="frontId" />
+    <result column="SESSION_ID" jdbcType="VARCHAR" property="sessionId" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="ORIG_DEPARTMENT_ID" jdbcType="VARCHAR" property="origDepartmentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, TX_DT, USER_ID, LOGIN_SEQ, INVESTOR_ID, LOGIN_TIME, IP, MAC, DRIDENTITYID, USERPRODUCT,
+    SRC_IP, SRC_MAC, FRONT_ID, SESSION_ID, APP_ID, ORIG_DEPARTMENT_ID
+  </sql>
+
+  <select id="selectAllDate" resultType="java.util.Date">
+    select TX_DT from log group by TX_DT
+    </select>
+
+  <select id="selectAllByDate" resultMap="BaseResultMap">
+    select IP,MAC,SRC_IP, SRC_MAC,INVESTOR_ID,APP_ID FROM log WHERE TX_DT = #{date} and APP_ID is not null and APP_ID != ""
+  </select>
+</mapper>

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzb.zhenjvan.mapper.AnalysisMapper">
+    <insert id="insetResult">
+        INSERT INTO `result` (`Self_acc_no`, `rule1207`,rule1208,rule1209,ruleSS002,
+            ruleSS003,ruleSS004,ruleSS006,ruleSS007,ruleSS008,ruleSS009,
+        ruleSS010,ruleSS011,ruleSS012,ruleSS015,ruleSS017,ruleSS020,ruleSS029) VALUES
+           (#{dto.selfAccNo},#{dto.rule1207},#{dto.rule1208},#{dto.rule1209},#{dto.ruleSS002},
+            #{dto.ruleSS003}, #{dto.ruleSS004},#{dto.ruleSS006},#{dto.ruleSS007},#{dto.ruleSS008},
+        #{dto.ruleSS009},#{dto.ruleSS010},#{dto.ruleSS011},#{dto.ruleSS012},
+            #{dto.ruleSS015},#{dto.ruleSS017},#{dto.ruleSS020},#{dto.ruleSS029});
+    </insert>
+    <update id="updateResultByAcc">
+        UPDATE result SET ruleSS006 = #{result.ruleSS006} WHERE Self_acc_no = #{result.selfAccNo}
+    </update>
+
+
+    <select id="selectFundSumbByAccNo" resultType="com.zzb.zhenjvan.entity.TbFundSum">
+        SELECT * FROM `tb_fund_sum` WHERE Self_acc_no = #{selfAccNo}  ORDER BY Init_date
+    </select>
+    <select id="selectBankTxnByAccNo" resultType="com.zzb.zhenjvan.entity.TbBankTxn">
+        SELECT * FROM `tb_bank_txn` WHERE Self_acc_no = #{selfAccNo} ORDER BY date_time
+    </select>
+    <select id="selectTbAccByAccNo" resultType="com.zzb.zhenjvan.entity.TbAcc">
+        SELECT * FROM `tb_acc` WHERE Self_acc_no = #{selfAccNo} limit 1
+    </select>
+    <select id="selectFaturesTrade" resultType="com.zzb.zhenjvan.entity.TbFaturesTrade">
+        SELECT * FROM `tb_fatures_trade` WHERE Self_acc_no = #{selfAccNo}
+    </select>
+    <select id="selectTbRiskNew" resultType="com.zzb.zhenjvan.entity.TbRiskNew">
+        SELECT * FROM `tb_risk_new` WHERE SELF_ACC_NO = #{selfAccNo} ORDER BY TIME DESC LIMIT 1
+    </select>
+    <select id="selectBankTxnByIpOrMac" resultType="com.zzb.zhenjvan.entity.TbBankTxn">
+        SELECT
+               *
+        FROM
+             `tb_bank_txn`
+        WHERE
+              Date = #{today}
+            <if test="type == 1">
+              AND IP_address IN (
+              <foreach collection="set" item="ip" separator=",">
+                    #{ip}
+              </foreach>
+              )
+            </if>
+
+            <if test="type == 2">
+                AND MAC_address IN (
+                   <foreach collection="set" item="mac" separator=",">
+                       #{mac}
+                   </foreach>
+                )
+            </if>
+    </select>
+    <select id="selectTbCstPers" resultType="com.zzb.zhenjvan.entity.TbCstPers">
+        SELECT * FROM `tb_cst_pers` WHERE self_acc_no = #{selfAccNo} LIMIT 1
+    </select>
+    <select id="selectTbCstUnit" resultType="com.zzb.zhenjvan.entity.TbCstUnit">
+        SELECT * FROM `tb_cst_unit` WHERE self_acc_no = #{selfAccNo} LIMIT 1
+    </select>
+    <select id="selectAllCstPers" resultType="java.lang.String">
+        SELECT  self_acc_no FROM `tb_cst_pers` group by self_acc_no
+    </select>
+    <select id="selectAllCstUnit" resultType="java.lang.String">
+        SELECT  self_acc_no FROM `tb_cst_unit` group by self_acc_no
+    </select>
+
+    <select id="selectAllTradeDate" resultType="java.util.Date">
+        SELECT DISTINCT INIT_DATE FROM tb_fund_sum ORDER BY INIT_DATE
+    </select>
+    <select id="selectAllWhiteIpMac" resultType="com.zzb.zhenjvan.entity.WhiteIpMac">
+        SELECT * FROM `white_ip_mac`
+    </select>
+    <select id="selectFuturesEntrust" resultType="com.zzb.zhenjvan.entity.TbFuturesEntrust">
+        SELECT * FROM `tb_futures_entrust` WHERE SELF_ACC_NO = #{selfAccNo}
+    </select>
+    <select id="selectIpMacCount" resultType="com.zzb.zhenjvan.dto.IpMacCount">
+        SELECT
+        IP_ADDRESS AS ip,
+        MAC_ADDRESS AS mac,
+        GROUP_CONCAT(DISTINCT SELF_ACC_NO) AS acc_no_list,
+        COUNT(DISTINCT SELF_ACC_NO) AS cusNum,
+        SUM(ENTRUST_AMT) AS money,
+        CONTRACT_CODE AS contractCode
+        FROM
+        `tb_futures_entrust`
+        WHERE DATE = #{date}
+        AND IP_ADDRESS != '@N'
+        AND IP_ADDRESS != '@N'
+        GROUP BY
+        IP_ADDRESS,
+        MAC_ADDRESS,
+        CONTRACT_CODE
+        HAVING cusNum >= 5
+        AND cusNum &lt;= 100
+    </select>
+    <select id="selectFuturesEntrustCount" resultType="java.util.Map">
+        SELECT
+            IP_ADDRESS AS ip,
+            MAC_ADDRESS AS mac,
+            DATE_FORMAT(DATE,'%Y-%m-%d') AS `date`
+        FROM
+            `tb_futures_entrust`
+        WHERE
+            SELF_ACC_NO = #{selfAccNo}
+          AND IP_ADDRESS != '@N'
+          AND MAC_ADDRESS != '@N'
+        GROUP BY
+            IP_ADDRESS,
+            MAC_ADDRESS,
+            DATE
+    </select>
+    <select id="selectLegalPersonInfo" resultType="com.zzb.zhenjvan.entity.LegalPersonInfo">
+        SELECT * FROM `legal_person_info` WHERE INVESTOR_ID = #{selfAccNo}
+    </select>
+    <select id="selectSameAddressContactList" resultType="java.lang.String">
+        SELECT SELF_ACC_NO FROM `tb_cst_pers` WHERE CONTACT1 IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+        UNION ALL SELECT SELF_ACC_NO FROM `tb_cst_pers` WHERE CONTACT2 IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+        UNION ALL SELECT SELF_ACC_NO FROM `tb_cst_pers` WHERE CONTACT3 IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+        UNION ALL SELECT SELF_ACC_NO FROM `tb_cst_pers` WHERE ADDRESS1 IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+        UNION ALL SELECT SELF_ACC_NO FROM `tb_cst_pers` WHERE ADDRESS2 IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+        UNION ALL SELECT SELF_ACC_NO FROM `tb_cst_pers` WHERE ADDRESS3 IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+        UNION ALL SELECT INVESTOR_ID FROM `legal_person_info` WHERE tel IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+        UNION ALL SELECT INVESTOR_ID FROM `legal_person_info` WHERE phone IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+        UNION ALL SELECT INVESTOR_ID FROM `legal_person_info` WHERE address IN (
+        <foreach collection="addressContactList" item="addressContact" separator=",">
+            #{addressContact}
+        </foreach>
+        )
+    </select>
+    <select id="selectTbFaturesTradeCount" resultType="com.zzb.zhenjvan.dto.TbFaturesTradeCount">
+        SELECT
+            COUNT(DISTINCT ENTRUST_NO) AS num,
+            SUM(IF(ENTRUST_BS = '11',BUSINESS_AMOUNT,0)) AS fundNum,
+            SUM(IF(ENTRUST_BS = '12',BUSINESS_AMOUNT,0)) AS payNum,
+            (SELECT BUSINESS_BALANCE FROM tb_fund_sum WHERE INIT_DATE = #{initDate} AND SELF_ACC_NO = #{selfAccNo}) AS money
+        FROM
+            `tb_fatures_trade`
+        WHERE
+            SELF_ACC_NO = #{selfAccNo}
+          AND INIT_DATE = #{initDate}
+          AND CONTRACT_CODE = #{contractCode}
+    </select>
+
+    <select id="selectAllMacByAcc" resultType="com.zzb.zhenjvan.dto.IpMacDto">
+        select `DATE` as tradeDate,MAC_ADDRESS as macAddress from tb_futures_entrust where
+        SELF_ACC_NO = #{selfAccNo} and MAC_ADDRESS != '@N' GROUP BY `DATE`,MAC_ADDRESS
+    </select>
+    <select id="selectCustomerRiskScore" resultType="com.zzb.zhenjvan.entity.CustomerRiskScore">
+        SELECT * FROM `customer_risk_score` WHERE INVESTOR_ID = #{selfAccNo} AND SCORE >= 4 ORDER BY GRADE_DT
+    </select>
+
+    <select id="selectSS003Rule" resultType="java.lang.String">
+        select SELF_ACC_NO from tb_fatures_trade where INIT_DATE = #{date}
+        and CONTRACT_CODE =#{contractCode}
+        and BUSINESS_AMOUNT = #{businessAmount} and SPRING_PRICE_TYPE = #{priceType} and ENTRUST_BS = #{payReceive}
+        AND DATE_FORMAT(CURR_TIME,'%H:%i') =#{currTimeStr} group by SELF_ACC_NO
+    </select>
+    <select id="selectFuturesEntrustDate" resultType="java.util.Date">
+        SELECT DATE FROM tb_futures_entrust GROUP BY DATE
+    </select>
+    <select id="selectResultByAcc" resultType="com.zzb.zhenjvan.entity.ResultDto">
+        SELECT * FROM result WHERE Self_acc_no = #{acc}
+    </select>
+
+    <select id="selectHisRiskDate" resultType="java.util.Date">
+        select str_to_date(TIME,"%Y%m%d") as riskDate from tb_risk_his where SELF_ACC_NO = #{selfAccNo} and RISK_CODE = '10' order by riskDate limit 1
+    </select>
+
+    <select id="selectCustomerGroupCount" resultType="com.zzb.zhenjvan.dto.CustomerGroupCount">
+        SELECT
+            SELF_ACC_NO AS acc_no,
+            SUM( ENTRUST_AMT ) AS money
+        FROM
+            tb_futures_entrust
+        WHERE
+            DATE = #{date}
+          AND SELF_ACC_NO IN (
+            <foreach collection="customerList" item="customer" separator=",">
+                #{customer}
+            </foreach>
+            )
+        GROUP BY
+            SELF_ACC_NO
+    </select>
+
+    <select id="selectAllRiskDate" resultType="com.zzb.zhenjvan.entity.TbRiskHis">
+        select TIME,RISK_CODE from tb_risk_his where SELF_ACC_NO =#{accNo}
+    </select>
+
+    <select id="selectFuturesEntrustByDate" resultType="com.zzb.zhenjvan.entity.TbFuturesEntrust">
+        select SELF_ACC_NO,CONTRACT_CODE,ENTRUST_NO,ENTRUST_AMT,IP_ADDRESS,MAC_ADDRESS from tb_futures_entrust
+        where DATE = #{date}
+    </select>
+
+    <select id="selectFaturesTradeByDate" resultType="com.zzb.zhenjvan.entity.TbFaturesTrade">
+        select SELF_ACC_NO,CONTRACT_CODE,ENTRUST_NO,BUSINESS_AMOUNT,SPRING_PRICE_TYPE,CURR_TIME,ENTRUST_BS from tb_fatures_trade where INIT_DATE =#{date}
+    </select>
+
+    <insert id="save006">
+        insert into result_006 (acc_no, trade_date, ip_mac, contract_code_str) values
+        <foreach collection="saveDtoList" item="item" separator=",">
+            (#{item.accNo},#{item.date},#{item.ipAndMac},#{item.contractCodeStr})
+        </foreach>
+    </insert>
+
+    <insert id="save003">
+        insert into result_003 (trade_date, acc_no, contract_code, trade_time) values
+        <foreach collection="saveDtoList" item="item" separator=",">
+            (#{item.tradeDate},#{item.accNo},#{item.contractCode},#{item.tradeTime})
+        </foreach>
+    </insert>
+
+    <select id="selectAllCstPersInfo" resultType="com.zzb.zhenjvan.entity.TbCstPers">
+        select * from tb_cst_pers
+    </select>
+
+    <select id="selectAllLegalPersonInfo" resultType="com.zzb.zhenjvan.entity.LegalPersonInfo">
+        select * from legal_person_info
+    </select>
+
+    <select id="selectFundSumbDateByAccNo" resultType="java.util.Date">
+        select DISTINCT INIT_DATE FROM tb_fund_sum where SELF_ACC_NO = #{accNo1} and BUSINESS_BALANCE >= 10000000
+    </select>
+
+    <select id="selectFaturesTradeByDateAndAcc" resultType="com.zzb.zhenjvan.entity.TbFaturesTrade">
+        select SELF_ACC_NO,ENTRUST_NO,CONTRACT_CODE,ENTRUST_BS,BUSINESS_AMOUNT,SPRING_PRICE_TYPE from tb_fatures_trade
+        where INIT_DATE = #{date} and SELF_ACC_NO in (#{accNo1},#{accNo2}) and CONTRACT_CODE is not null  and CONTRACT_CODE != ""
+    </select>
+
+    <insert id="save012">
+        insert into result_012 (trade_date, acc_no, code_list) values
+        <foreach collection="saveList" item="item" separator=",">
+            (#{item.tradeDate},#{item.accNo},#{item.codeList})
+        </foreach>
+    </insert>
+
+    <select id="selectContractInvalidDate" resultType="com.zzb.zhenjvan.entity.UnpopularContractInfo">
+        select TX_DT,contract_name,invalid_date from unpopular_contract_info group by TX_DT,contract_name,invalid_date
+    </select>
+
+    <select id="selectAllRiskHis" resultType="com.zzb.zhenjvan.entity.TbRiskHis">
+        select * from tb_risk_his
+    </select>
+
+    <insert id="insertRiskCount">
+        insert into risk_code_count (acc_no, last_risk_code, last_risk_date, should_date, reality_date, diff_day) value
+        (#{accNo},#{lastRiskCode},#{lastRiskDate},#{shouldDate},#{realityDate},#{diffDay})
+    </insert>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.LegalPersonInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.LegalPersonInfo">
+    <!--@mbg.generated-->
+    <!--@Table legal_person_info-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="INVESTOR_ID" jdbcType="VARCHAR" property="investorId" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, INVESTOR_ID, tel, phone, address
+  </sql>
+</mapper>

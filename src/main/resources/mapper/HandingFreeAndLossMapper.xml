@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.HandingFreeAndLossMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.HandingFreeAndLoss">
+    <!--@mbg.generated-->
+    <!--@Table handing_free_and_loss-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="TX_DT" jdbcType="DATE" property="txDt" />
+    <result column="INVESTOR_ID" jdbcType="VARCHAR" property="investorId" />
+    <result column="handling_fee" jdbcType="DECIMAL" property="handlingFee" />
+    <result column="handling_fee2" jdbcType="DECIMAL" property="handlingFee2" />
+    <result column="loss_amount" jdbcType="DECIMAL" property="lossAmount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, TX_DT, INVESTOR_ID, handling_fee, handling_fee2, loss_amount
+  </sql>
+
+  <select id="selectByAccNo" resultMap="BaseResultMap">
+    select * from handing_free_and_loss where INVESTOR_ID = #{selfAccNo}
+    </select>
+</mapper>

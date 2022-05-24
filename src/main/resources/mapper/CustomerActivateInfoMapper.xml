@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.CustomerActivateInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.CustomerActivateInfo">
+    <!--@mbg.generated-->
+    <!--@Table customer_activate_info-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="INVESTOR_ID" jdbcType="VARCHAR" property="investorId" />
+    <result column="ACTIVE_DT" jdbcType="VARCHAR" property="activeDt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, INVESTOR_ID, ACTIVE_DT
+  </sql>
+
+  <select id="selectByAcc" resultMap="BaseResultMap">
+    select * from customer_activate_info where INVESTOR_ID = #{selfAccNo} and ACTIVE_DT IS NOT NULL  and ACTIVE_DT !=''
+  </select>
+</mapper>

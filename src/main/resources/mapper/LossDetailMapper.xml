@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.LossDetailMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.LossDetail">
+    <!--@mbg.generated-->
+    <!--@Table loss_detail-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="TX_DT" jdbcType="DATE" property="txDt" />
+    <result column="INVESTOR_ID" jdbcType="VARCHAR" property="investorId" />
+    <result column="loss_amount" jdbcType="DECIMAL" property="lossAmount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, TX_DT, INVESTOR_ID, loss_amount
+  </sql>
+
+  <select id="selectByAccNo" resultMap="BaseResultMap">
+    select * from loss_detail where INVESTOR_ID = #{selfAccNo}
+    </select>
+</mapper>

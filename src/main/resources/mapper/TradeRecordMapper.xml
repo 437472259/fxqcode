@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.zhenjvan.mapper.TradeRecordMapper">
+  <resultMap id="BaseResultMap" type="com.zzb.zhenjvan.entity.TradeRecord">
+    <!--@mbg.generated-->
+    <!--@Table trade_record-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tx_dt" jdbcType="DATE" property="txDt" />
+    <result column="exchange_id" jdbcType="VARCHAR" property="exchangeId" />
+    <result column="deal_nbr" jdbcType="VARCHAR" property="dealNbr" />
+    <result column="settlement_no" jdbcType="VARCHAR" property="settlementNo" />
+    <result column="bs_flg" jdbcType="VARCHAR" property="bsFlg" />
+    <result column="investor_id" jdbcType="VARCHAR" property="investorId" />
+    <result column="investor_acct" jdbcType="VARCHAR" property="investorAcct" />
+    <result column="agmt_cd" jdbcType="VARCHAR" property="agmtCd" />
+    <result column="openclose_flg" jdbcType="VARCHAR" property="opencloseFlg" />
+    <result column="userforceclose_flg" jdbcType="VARCHAR" property="userforcecloseFlg" />
+    <result column="force_close_reason" jdbcType="VARCHAR" property="forceCloseReason" />
+    <result column="count" jdbcType="DECIMAL" property="count" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="hedge_flg" jdbcType="VARCHAR" property="hedgeFlg" />
+    <result column="bargain_typ" jdbcType="VARCHAR" property="bargainTyp" />
+    <result column="bargain_count" jdbcType="DECIMAL" property="bargainCount" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="exchange_trader_cd" jdbcType="VARCHAR" property="exchangeTraderCd" />
+    <result column="bargain_dt" jdbcType="VARCHAR" property="bargainDt" />
+    <result column="bargain_time" jdbcType="VARCHAR" property="bargainTime" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="member_id" jdbcType="VARCHAR" property="memberId" />
+    <result column="bargainprice_src" jdbcType="VARCHAR" property="bargainpriceSrc" />
+    <result column="local_order_id" jdbcType="VARCHAR" property="localOrderId" />
+    <result column="seq_no" jdbcType="DECIMAL" property="seqNo" />
+    <result column="fee_charge_cd" jdbcType="VARCHAR" property="feeChargeCd" />
+    <result column="fee_amt" jdbcType="DECIMAL" property="feeAmt" />
+    <result column="exchange_fee_flg" jdbcType="VARCHAR" property="exchangeFeeFlg" />
+    <result column="exchange_fee_amt" jdbcType="DECIMAL" property="exchangeFeeAmt" />
+    <result column="cust_no" jdbcType="VARCHAR" property="custNo" />
+    <result column="userproduct" jdbcType="VARCHAR" property="userproduct" />
+    <result column="trader_id" jdbcType="VARCHAR" property="traderId" />
+    <result column="orig_department_id" jdbcType="VARCHAR" property="origDepartmentId" />
+    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, tx_dt, exchange_id, deal_nbr, settlement_no, bs_flg, investor_id, investor_acct,
+    agmt_cd, openclose_flg, userforceclose_flg, force_close_reason, `count`, price, hedge_flg,
+    bargain_typ, bargain_count, order_id, exchange_trader_cd, bargain_dt, bargain_time,
+    user_id, member_id, bargainprice_src, local_order_id, seq_no, fee_charge_cd, fee_amt,
+    exchange_fee_flg, exchange_fee_amt, cust_no, userproduct, trader_id, orig_department_id,
+    department_id
+  </sql>
+
+  <select id="selectByAcc" resultMap="BaseResultMap">
+    select *
+    from trade_record where investor_acct =#{accNo};
+    </select>
+</mapper>
